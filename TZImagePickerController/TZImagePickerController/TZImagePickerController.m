@@ -14,8 +14,7 @@
 #import "TZAssetCell.h"
 #import "UIView+Layout.h"
 #import "TZImageManager.h"
-#import "math.h"
-#import "sys/utsname.h"
+#import <sys/utsname.h>
 
 @interface TZImagePickerController () {
     NSTimer *_timer;
@@ -109,7 +108,7 @@
 
 - (void)configBarButtonItemAppearance {
     UIBarButtonItem *barItem;
-    if (iOS9Later) {
+    if (@available(iOS 9.0, *)) {
         barItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[TZImagePickerController class]]];
     } else {
         barItem = [UIBarButtonItem appearanceWhenContainedIn:[TZImagePickerController class], nil];
@@ -174,7 +173,7 @@
             _tipLabel.font = [UIFont systemFontOfSize:16];
             _tipLabel.textColor = [UIColor blackColor];
             NSDictionary *infoDict = [NSBundle mainBundle].localizedInfoDictionary;
-            if (!infoDict) {
+            if (!infoDict || !infoDict.count) {
                 infoDict = [NSBundle mainBundle].infoDictionary;
             }
             NSString *appName = [infoDict valueForKey:@"CFBundleDisplayName"];
